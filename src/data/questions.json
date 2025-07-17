@@ -1,0 +1,22 @@
+[
+    {
+      "id": "q1",
+      "text": "Which trait do you value most?",
+      "answers": [
+        { "text": "Bravery", "points": { "Gryffindor": 2 } },
+        { "text": "Loyalty", "points": { "Hufflepuff": 2 } },
+        { "text": "Intelligence", "points": { "Ravenclaw": 2 } },
+        { "text": "Ambition", "points": { "Slytherin": 2 } }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "Choose a magical creature.",
+      "answers": [
+        { "text": "Phoenix", "points": { "Gryffindor": 1, "Ravenclaw": 1 } },
+        { "text": "Badger", "points": { "Hufflepuff": 2 } },
+        { "text": "Eagle", "points": { "Ravenclaw": 2 } },
+        { "text": "Snake", "points": { "Slytherin": 2 } }
+      ]
+    }
+  ]

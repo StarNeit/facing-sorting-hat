@@ -1,0 +1,38 @@
+.message-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .message-row.user {
+    justify-content: flex-end;
+  }
+  
+  .message-row.bot {
+    justify-content: flex-start;
+  }
+  
+  .message-bubble {
+    max-width: 70%;
+    padding: 10px 16px;
+    border-radius: 18px;
+    font-size: 1rem;
+    line-height: 1.4;
+    animation: fadeIn 0.3s;
+  }
+  
+  .message-bubble.user {
+    background: #4f8cff;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+  
+  .message-bubble.bot {
+    background: #e5e5ea;
+    color: #222;
+    border-bottom-left-radius: 4px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
