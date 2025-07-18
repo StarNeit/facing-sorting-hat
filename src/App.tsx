@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import questionsData from "./data/questions.json";
 import { House, Question } from "./types";
 import Chat from "./components/Chat";
-import Input from "./components/Input";
+import ChatHeader from "./components/ChatHeader";
+import ChatFooter from "./components/ChatFooter";
 import "./App.css";
 
 const houseColors: Record<House, string> = {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
   });
   const [quizStarted, setQuizStarted] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [name, setName] = useState<string | null>(null);
   const questions: Question[] = questionsData as Question[];
 
   const handleStart = () => {
@@ -38,6 +40,26 @@ const App: React.FC = () => {
 
   const handleAnswer = (answerText: string) => {
     const q = questions[step];
+    if (q.answers.length === 0) {
+      setName(answerText);
+      setMessages(msgs => [
+        ...msgs,
+        { text: answerText, fromUser: true },
+        { text: `Nice to meet you, ${answerText}! Let's begin the quiz.` }
+      ]);
+      setTimeout(() => {
+        if (step + 1 < questions.length) {
+          setStep(step + 1);
+          setMessages(msgs => [
+            ...msgs,
+            { text: questions[step + 1].text }
+          ]);
+        } else {
+          setFinished(true);
+        }
+      }, 800);
+      return;
+    }
     const answer = q.answers.find(a => a.text.toLowerCase() === answerText.toLowerCase());
     setMessages(msgs => [
       ...msgs,
@@ -76,7 +98,7 @@ const App: React.FC = () => {
           setTimeout(() => {
             setMessages(msgs => [
               ...msgs,
-              { text: `You belong in ${result}! 🧙‍♂️`, fromUser: false }
+              { text: `${name ? name + ", " : ""}you belong in ${result}! 🧙‍♂️`, fromUser: false }
             ]);
           }, 1200);
         }
@@ -94,44 +116,20 @@ const App: React.FC = () => {
   return (
     <div className="app-bg">
       <div className="chat-container">
-        <div className="chat-header">Sorting Hat Quiz</div>
+        <ChatHeader />
         <Chat messages={messages} />
-        <div className="chat-footer">
-          {!quizStarted && (
-            <button
-              className="start-btn"
-              onClick={handleStart}
-            >
-              Start Quiz
-            </button>
-          )}
-          {quizStarted && !finished && (
-            <div>
-              <div className="answer-hint">
-                Choose: {questions[step].answers.map(a => `"${a.text}"`).join(", ")}
-              </div>
-              <Input
-                onSend={handleAnswer}
-                disabled={finished}
-                placeholder="Type your answer exactly..."
-              />
-            </div>
-          )}
-          {finished && (
-            <div className="result-block">
-              <div
-                className="result-house"
-                style={{
-                  background: houseColors[getResult(scores)],
-                  color: getResult(scores) === "Hufflepuff" ? "#222" : "#fff"
-                }}
-              >
-                {getResult(scores)}
-              </div>
-              <div className="try-again">Refresh to try again!</div>
-            </div>
-          )}
-        </div>
+        <ChatFooter
+          quizStarted={quizStarted}
+          finished={finished}
+          name={name}
+          questions={questions}
+          step={step}
+          onStart={handleStart}
+          onAnswer={handleAnswer}
+          scores={scores}
+          houseColors={houseColors}
+          getResult={getResult}
+        />
       </div>
     </div>
   );

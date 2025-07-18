@@ -1,6 +1,11 @@
 [
     {
       "id": "q1",
+      "text": "What's your name?",
+      "answers": []
+    },
+    {
+      "id": "q2",
       "text": "Which trait do you value most?",
       "answers": [
         { "text": "Bravery", "points": { "Gryffindor": 2 } },
@@ -10,7 +15,7 @@
       ]
     },
     {
-      "id": "q2",
+      "id": "q3",
       "text": "Choose a magical creature.",
       "answers": [
         { "text": "Phoenix", "points": { "Gryffindor": 1, "Ravenclaw": 1 } },
